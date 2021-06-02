@@ -1,0 +1,57 @@
+{% extends 'orders/base.html' %}
+{% block title %}{{ site_settings.title }} - Список заказов{% endblock %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row border">
+            <div class="col-md-12">
+                <form action="{% url 'orders' %}" id="mainform" method="post">
+                    {% csrf_token %}
+                    {% include 'inc/_date_filter.html' %}
+                </form>
+
+                <div class="card mt-1" style="width: 100%;">
+                    <div class="card-header">
+                        {% if date_range %}
+                            <b>{{ date_range }}</b>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if orders %}
+
+                        {% for item in orders %}
+                        <div class="card mt-1" style="width: 100%;">
+                            <div class="card-header">
+                                <h5 class="card-title">{{ item.time.time }} (№ {{ item.id }}) - {{ item.cost }} руб.
+                                {% if item.pay_type %}
+                                    (НАЛ.)
+                                    {% else %}
+                                    (КАРТА)
+                                {% endif %}
+                                </h5>
+                                {{ item.time.date }}
+                                {% if item.description %}<i>Примечание: {{ item.description }}</i>
+                                {% endif %}
+                            </div>
+                            <div class="card-body">
+                                {% for detail in item.orderdetail_set.all %}
+                                        {{ detail.product_id }} - {{ detail.count }}
+                                        <br>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                {% else %}
+                    {% if date_range %}
+                    заказы не найдены
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsblock %}<script src="{% static 'js/orders.js' %}"></script>{% endblock %}

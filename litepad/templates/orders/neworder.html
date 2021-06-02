@@ -1,0 +1,76 @@
+{% extends 'orders/base.html' %}
+{% block title %}{{ site_settings.title }} - Новый заказ{% endblock %}
+{% load static %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row border">
+            <div class="col-md-5 m-1 border rounded">
+                <div class="container">
+                    <div class="row">
+                        {% for item in products %}
+                            <div>
+                                <a id="{{ item.id }}" class="cat-{{ item.category.id }} btn btn-product btn-block
+                                 product m-1 border" href="#" role="button" data-price="{{ item.price }}"
+                                   style="background-color:{{ item.color }}; color:{{ item.text_color }};">{{ item.name }}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2 m-1 p-1 border rounded" id="category">
+                {% for item in categories %}
+                    <a class="btn btn-block btn-secondary p-2 category" href="#" role="button" id="cat-{{ item.id }}">{{ item.name }}</a>
+                {% endfor %}
+            </div>
+
+            <div class="col-4 m-1 border rounded">
+                <form id="mainform" action="{% url 'neworder' %}" method="post">
+                    <div class="container">
+                        <div class="row orders">
+                            <form action="{% url 'neworder' %}" method="post">
+                                {% csrf_token %}
+                                <table id="cart" class="w-100">
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+
+                        <div class="row mb-1">
+                            <div>
+                                <button type="button" class="btn btn-secondary mr-auto" id="discount" data-container="body"
+                                        data-toggle="popover" data-html="true" data-placement="top" data-content="<hr>
+                                        <a href='#' onclick='discount(0);'>Без скидки</a><br><hr><a href='#' onclick='discount(10);'>10%</a>
+                                        <br><hr><a href='#' onclick='discount(20);'>20%</a>
+                                        <br><hr><a href='#' onclick='discount(30);'>30%</a>
+                                        <br><hr><a href='#' onclick='discount(50);'>50%</a><br>
+                                        <hr><a href='#' onclick='discount(100);'>100%</a><br>
+                                        <hr>" data-discount="0">0 %
+                                </button>
+                            </div>
+                            <div class="custom-control custom-switch ml-3">
+                                <input id="id_pay_type" name="pay_type" checked="checked" type="checkbox" class="custom-control-input" onchange="pay_type_change();">
+                                <label id="pay_type_label" for="id_pay_type" class="custom-control-label">Нал.</label>
+                            </div>
+                            <div class="ml-auto">
+                                <input type="hidden" id="id_discount" name="discount" value="0">
+                                <input type="hidden" id="id_cost" name="cost" value="0">
+                                <input type="hidden" id="id_user" name="user" value="{{ user.id }}">
+                                <button type="button" class="btn btn-secondary" onclick="clearCart();">Очистить</button>
+                                <button id="cost" type="submit" class="btn btn-success" data-cost="0">К оплате: 0</button>
+                            </div>
+                        </div>
+                        <div class="row mb-1">
+                            <input id="id_description" name="description" type="text" size="80" style="width: 100%" placeholder="Примечание">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block jsblock %}<script src="{% static 'js/neworder.js' %}"></script>{% endblock %}

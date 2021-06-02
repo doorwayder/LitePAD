@@ -1,0 +1,100 @@
+{% extends 'orders/base.html' %}
+{% block title %}{{ site_settings.title }} - Статистика{% endblock %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row border">
+            <div class="col-md-12">
+                <form action="{% url "stat" %}" method="post" id="mainform">
+                    {% csrf_token %}
+                    {% include 'inc/_date_filter.html' %}
+                </form>
+                <div class="card mt-1" style="width: 100%;">
+                    <div class="card-header">
+                        {% if date_range %}
+                            <b>{{ date_range }}</b>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if orders %}
+
+                    <div class="card mt-1" style="width: 100%;">
+                        <div class="card-header">
+                            <h5 class="card-title mt-2">ЗАКАЗОВ: {{ orders.count }}</h5>
+                            <div class="row border-bottom">
+                                <div class="col-md-2" style="background: #D9FFAD;"><b>Сумма:</b> </div><div class="col-md-2" style="background: #D9FFAD;"><b>{{ sum_all }} руб.</b></div>
+                            </div>
+                            <div class="row border-bottom">
+                                <div class="col-md-2">Наличные: </div><div class="col-md-2"><b>{{ sum_cash }} руб.</b></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">Безнал: </div><div class="col-md-2"><b>{{ sum_acq }} руб.</b></div>
+                            </div>
+                        </div>
+
+                        {% ifequal user.groups.all.0.name 'Admin' %}
+                            <div class="card-body">
+                                <h5 class="card-title mt-2">ТОВАРЫ:</h5>
+                                <table class="table-striped table-hover" cellspacing="0" cellpadding="5" width="250em">
+                                    <tr class="border-bottom border-top">
+                                        <td class="bg-light"><b>Шаурма:</b></td><td class="bg-light"> <b>{{ shaurma }}</b></td>
+                                    </tr>
+                                    {% for item in products.0 %}
+                                        <tr><td>{{ item.product_id__name }}</td><td>{{ item.count }}</td></tr>
+                                    {% endfor %}
+                                    <tr class="border-bottom border-top">
+                                        <td class="bg-light"><b>Кофе:</b></td><td class="bg-light"> <b>{{ coffee }}</b></td>
+                                    </tr>
+                                    {% for item in products.1 %}
+                                        <tr><td>{{ item.product_id__name }}</td><td>{{ item.count }}</td></tr>
+                                    {% endfor %}
+                                    <tr class="border-bottom border-top">
+                                        <td class="bg-light"><b>Напитки:</b></td><td class="bg-light"><b>{{ drink }}</b></td>
+                                    </tr>
+                                    {% for item in products.2 %}
+                                        <tr><td>{{ item.product_id__name }}</td><td>{{ item.count }}</td></tr>
+                                    {% endfor %}
+                                    <tr class="border-bottom border-top">
+                                        <td class="bg-light"><b>Доп.:</b></td><td class="bg-light"> <b>{{ adv }}</b></td>
+                                    </tr>
+                                    {% for item in products.3 %}
+                                        <tr><td>{{ item.product_id__name }}</td><td>{{ item.count }}</td></tr>
+                                    {% endfor %}
+                                    <tr class="border-bottom border-top">
+                                        <td class="bg-light"><b>Акции:</b></td><td class="bg-light"><b>{{ disc }}</b></td>
+                                    </tr>
+                                    {% for item in products.4 %}
+                                        <tr><td>{{ item.product_id__name }}</td><td>{{ item.count }}</td></tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            <div class="card-footer">
+                                <h5 class="card-title mt-2">ДВИЖЕНИЕ СЫРЬЯ:</h5>
+                                <table class="table-striped table-hover" cellspacing="0" cellpadding="5" width="250em">
+                                    {% for item in materials %}
+                                        <tr class="border-bottom">
+                                            <td>{{ item.product_id__sostav__material_id__name }}</td><td>{% widthratio item.product_id__sostav__count 1 item.count %}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                        {% endifequal %}
+
+                    </div>
+
+                {% else %}
+
+                    {% if date_range %}
+                    заказы не найдены
+                    {% endif %}
+
+
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsblock %}<script src="{% static 'js/orders.js' %}"></script>{% endblock %}

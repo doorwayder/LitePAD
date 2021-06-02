@@ -1,0 +1,13 @@
+<div class="card">
+    <div class="card-body">
+        <h4 class="card-title">Вход</h4>
+
+        <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}">
+                <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username" class="mb-2 w-100"><br>
+                <input type="password" name="password" autocomplete="current-password" required id="id_password" class="mb-2 w-100"><br>
+                <button type="submit" class="btn btn-primary btn-block">Log in</button>
+        </form>
+    </div>
+</div>

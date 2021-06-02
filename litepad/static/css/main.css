@@ -1,0 +1,63 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 40px;
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #343a40;
+}
+
+.btn{
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.btn-product{
+    width: 111px !important;
+    height: 60px !important;
+}
+
+.navbar {
+    min-height: 60px;
+}
+
+.orders {
+    min-height: 450px;
+}
+
+.tdid{
+    font-size: 0px;
+}
+
+.tdmain{
+    font-size: 16px;
+    font-weight: bold;
+    border-bottom: 1px dotted black;
+}
+
+.tdprice{
+    font-size: 14px;
+    font-style: italic;
+    border-bottom: 1px dotted black;
+}
+
+.navbar-custom{
+    font-size: 16px;
+    background-color: #f7f7f7;
+}
+
+.navbar-custom a{
+    font-size: 16px;
+    color: #333333;
+    background-color: #f7f7f7;
+    border-right: 1px solid #666666;
+}
+

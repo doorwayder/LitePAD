@@ -1,0 +1,34 @@
+<div class="navbar navbar-expand-sm navbar-light navbar-custom border rounded p-0">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#DateFilter" aria-controls="DateFilter" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="DateFilter">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+              <a class="nav-link" href="#" onclick="date_today();">Сегодня</a>
+          </li>
+          <li>
+              <a class="nav-link" href="#" onclick="date_yesterday();">Вчера</a>
+          </li>
+          <li>
+              <a class="nav-link" href="#" onclick="date_beforeyesterday();">Позавчера</a>
+          </li>
+          <li>
+              <a class="nav-link" href="#" onclick="date_week();">Неделя</a>
+          </li>
+          <li>
+              <a class="nav-link" href="#" onclick="date_month();">Месяц</a>
+          </li>
+          <li>
+              <a class="nav-link" href="#" onclick="date_custom();">Выборочно</a>
+          </li>
+          <li>
+            <input type="date" name="startdate" class="startdate ml-2 mt-1" id="startdate">
+          </li>
+          <li>
+              <input type="date" name="stopdate" class="stopdate ml-2 mt-1" id="stopdate">
+          </li>
+        </ul>
+    </div>
+</div>
+
