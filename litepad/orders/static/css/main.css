@@ -33,6 +33,11 @@ footer {
     min-height: 450px;
 }
 
+
+.maincart {
+    height: 20px;
+}
+
 .tdid{
     font-size: 0px;
 }

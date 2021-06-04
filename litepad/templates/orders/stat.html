@@ -36,10 +36,29 @@
                         {% ifequal user.groups.all.0.name 'Admin' %}
                             <div class="card-body">
                                 <h5 class="card-title mt-2">ТОВАРЫ:</h5>
+                                <div class="row border-bottom">
+                                    <div class="col-md-2">
+                                        <b>Шаурма:</b>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <b>{{ shaurma }}</b>
+                                    </div>
+                                </div>
+
+                                {% for item in products.0 %}
+                                <div class="row border-bottom">
+                                    <div class="col-md-2">
+                                        {{ item.product_id__name }}
+                                    </div>
+                                    <div class="col-md-2">
+                                        {{ item.count }}
+                                    </div>
+                                </div>
+                                <tr><td></td><td></td></tr>
+                                {% endfor %}
+
                                 <table class="table-striped table-hover" cellspacing="0" cellpadding="5" width="250em">
-                                    <tr class="border-bottom border-top">
-                                        <td class="bg-light"><b>Шаурма:</b></td><td class="bg-light"> <b>{{ shaurma }}</b></td>
-                                    </tr>
+
                                     {% for item in products.0 %}
                                         <tr><td>{{ item.product_id__name }}</td><td>{{ item.count }}</td></tr>
                                     {% endfor %}
